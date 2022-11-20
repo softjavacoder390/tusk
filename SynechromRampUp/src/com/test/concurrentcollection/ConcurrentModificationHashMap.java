@@ -1,0 +1,50 @@
+package com.test.concurrentcollection;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+
+public class ConcurrentModificationHashMap extends Thread{
+
+	static ConcurrentHashMap<String,Integer> map = new ConcurrentHashMap();
+	public void run(){
+		
+		try {
+			Thread.sleep(3000);
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("manish", 33);
+		
+	}
+	public static void main(String[] args) {
+		
+		map.put("harish", 31);
+		map.put("sharad", 38);
+		map.put("bharat", 31);
+		map.put("chandu", 26);
+		map.put("chandu", 34);
+		
+		ConcurrentModificationHashMap t = new ConcurrentModificationHashMap();
+		
+		t.start();
+		
+		for(Map.Entry<String, Integer> entry : map.entrySet()){
+			
+			System.out.println("name : "+entry.getKey());
+			System.out.println("age : "+entry.getValue());
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+	}
+}
